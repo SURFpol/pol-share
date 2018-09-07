@@ -13,7 +13,7 @@ RUN echo "source activate env" > ~/.bashrc
 ENV PATH /opt/conda/envs/surf-share/bin:$PATH
 
 # Collect all statics resources (images, css, etc.)
-#RUN python manage.py collectstatic --noinput
+RUN python manage.py collectstatic --noinput
 
 # Create and/or migrate simple database
 RUN python manage.py migrate

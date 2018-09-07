@@ -9,4 +9,5 @@ dependencies:
   - libiconv
   - pip:
     - django==1.11
+    - whitenoise==4.0
     - pytz==2018.5
