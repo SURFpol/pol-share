@@ -1,0 +1,9 @@
+# System and IDE
+.DS_Store
+*.iml
+.idea
+__pycache__
+
+# Django
+lti/lti/secrets.py
+*.sqlite3
