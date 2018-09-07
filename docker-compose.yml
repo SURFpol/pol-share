@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  lti:
+    build: lti
+    volumes:
+      - ./lti:/usr/src/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DEBUG=1
+      - DJANGO_URL_PREFIX=/
+      - DATABASE_HOST=db
+      - DATABASE_PASSWORD=lefkfqewfqw
