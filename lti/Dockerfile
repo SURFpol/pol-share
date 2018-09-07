@@ -3,9 +3,6 @@
 # FROM directive instructing base image to build upon
 FROM continuumio/miniconda3
 
-RUN apt-get update && \
-    apt-get install -y build-essential
-
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
 
