@@ -7,4 +7,7 @@ def main(request):
 
 
 def config(request):
-    return TemplateResponse(request, "lti/config.xml")
+    return TemplateResponse(request, "lti/config.xml", {
+        "server_host": request.META['SERVER_NAME'],
+        "server_port": request.META['SERVER_PORT']
+    })
