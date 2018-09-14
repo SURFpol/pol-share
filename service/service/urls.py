@@ -1,12 +1,8 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
-
-from service import views
 
 
 urlpatterns = [
-    url(r'^$', views.main, name="lti-main"),
-    url(r'^config.xml$', views.config, name="lti-config"),
+    url(r'', include("lti.urls", namespace="lti")),
     url(r'^admin/', admin.site.urls),
-
 ]
