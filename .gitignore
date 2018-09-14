@@ -5,5 +5,5 @@
 __pycache__
 
 # Django
-lti/lti/secrets.py
+service/service/secrets.py
 *.sqlite3

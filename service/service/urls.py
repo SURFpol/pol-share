@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.contrib import admin
 
-from lti import views
+from service import views
 
 
 urlpatterns = [
