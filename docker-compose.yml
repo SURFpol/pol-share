@@ -3,6 +3,7 @@ version: "3"
 services:
   service:
     build: service
+    command: uwsgi --ini /usr/src/app/uwsgi.ini --py-autoreload=200
     volumes:
       - ./service:/usr/src/app
     ports:
