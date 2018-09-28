@@ -1,14 +1,14 @@
 from django.views.generic.edit import CreateView
 from django.http.response import HttpResponse
 
-from ims.models import CommonCartridge
+from ims.models import CommonCartridge, CommonCartridgeForm
 
 
 class UploadView(CreateView):
     model = CommonCartridge
-    fields = ['file']
     template_name = 'share/upload.html'
     success_url = '/upload/success/'
+    form_class = CommonCartridgeForm
 
 
 def upload_success(request):
