@@ -1,0 +1,31 @@
+{% load static bootstrap4 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload IMSCC</title>
+    {% bootstrap_css %}
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
+    {% bootstrap_javascript jquery='full' %}
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">POL Share</a>
+    </nav>
+
+    <div id="content" class="container-fluid">
+        <p>Upload your Content Cardridge here to share it through ShareKit.</p>
+        {% bootstrap_messages %}
+        <form action="{{ request.path }}" method="post" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    Submit
+                </button>
+            {% endbuttons %}
+        </form>
+    </div>
+</body>
+
+</html>

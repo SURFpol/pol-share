@@ -7,3 +7,7 @@ __pycache__
 # Django
 service/service/secrets.py
 *.sqlite3
+
+# Project
+*.imscc
+

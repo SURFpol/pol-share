@@ -11,3 +11,4 @@ dependencies:
     - django==1.11
     - whitenoise==4.0
     - pytz==2018.5
+    - django-bootstrap4==0.0.7
