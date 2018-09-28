@@ -4,7 +4,7 @@ from ims.models import CommonCartridge
 
 
 class CommonCartridgeAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("__str__", "upload_at")
 
 
 admin.site.register(CommonCartridge, CommonCartridgeAdmin)
