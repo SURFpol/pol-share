@@ -3,7 +3,7 @@ version: "3"
 services:
   service:
     build: service
-    command: uwsgi --ini /usr/src/app/uwsgi.ini --py-autoreload=200
+    command: uwsgi --ini /usr/src/app/uwsgi.ini --py-autoreload=3 --honour-stdin
     volumes:
       - ./service:/usr/src/app
     ports:
