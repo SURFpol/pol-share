@@ -1,3 +1,4 @@
+import json
 import os
 from zipfile import ZipFile
 
@@ -45,6 +46,11 @@ class CommonCartridge(models.Model):
 
     def get_absolute_url(self):
         return reverse('common-cartridge-upload-success', kwargs={"pk": self.id})
+
+    def metadata_tag(self):
+        return '<pre>{}</pre>'.format(json.dumps(self.get_metadata(), indent=4))
+    metadata_tag.short_description = 'Metadata'
+    metadata_tag.allow_tags = True
 
     def __str__(self):
         tail, head = os.path.split(self.file.name)
