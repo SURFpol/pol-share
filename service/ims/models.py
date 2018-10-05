@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 from django.db import models
 from django import forms
+from django.urls import reverse
 from django.core.exceptions import ValidationError
 
 
@@ -22,7 +23,7 @@ class CommonCartridge(models.Model):
                 'version': manifest.find('schemaversion').text
             },
             'title': manifest.find('lomimscc:title').find('lomimscc:string').text,
-            'export_at': manifest.find('lomimscc:contribute').find('lomimscc:date').find('lomimscc:dateTime').text,
+            'export_at': manifest.find('lomimscc:contribute').find('lomimscc:date').find('lomimscc:datetime').text,
             'license': manifest.find('lomimscc:rights').find('lomimscc:description').find('lomimscc:string').text
         }
 
@@ -41,6 +42,9 @@ class CommonCartridge(models.Model):
                 'files': [file['href'] for file in resource.find_all('file')]
             }
         return results
+
+    def get_absolute_url(self):
+        return reverse('common-cartridge-upload-success', kwargs={"pk": self.id})
 
     def __str__(self):
         tail, head = os.path.split(self.file.name)

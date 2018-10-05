@@ -1,1 +1,1 @@
-from .upload import UploadView, upload_success
+from .common_cartridge import CommonCartridgeUploadView, CommonCartridgeDetailView

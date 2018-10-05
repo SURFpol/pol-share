@@ -1,0 +1,21 @@
+{% load static bootstrap4 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Success</title>
+    {% bootstrap_css %}
+    <link href="{% static "css/main.css" %}" rel="stylesheet">
+    {% bootstrap_javascript jquery='full' %}
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">POL Share</a>
+    </nav>
+
+    <div id="content" class="container-fluid">
+        <p>Thank you for sharing your <b>{{ metadata.title }}</b> Common Cartridge with us.</p>
+    </div>
+</body>
+
+</html>
