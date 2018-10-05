@@ -7,8 +7,8 @@ dependencies:
   - python=3.6.6
   - uwsgi
   - libiconv
-  - lxml=4.2.5
-  - beautifulsoup4=4.4.0
+  - lxml
+  - beautifulsoup4
   - pip:
     - django==1.11
     - whitenoise==4.0
