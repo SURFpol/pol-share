@@ -29,7 +29,10 @@ except ImportError:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["ltidev.surfpol.nl"]
+ALLOWED_HOSTS = [
+    "localhost",
+    "ltidev.surfpol.nl",
+]
 X_FRAME_OPTIONS = 'ALLOWALL'
 
 
