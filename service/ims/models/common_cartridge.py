@@ -45,7 +45,7 @@ class CommonCartridge(models.Model):
         return results
 
     def get_absolute_url(self):
-        return reverse('common-cartridge-upload-success', kwargs={"pk": self.id})
+        return reverse('share:common-cartridge-upload-success', kwargs={"pk": self.id})
 
     def metadata_tag(self):
         return '<pre>{}</pre>'.format(json.dumps(self.get_metadata(), indent=4))

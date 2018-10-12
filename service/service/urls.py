@@ -1,13 +1,12 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from share.views import CommonCartridgeUploadView, CommonCartridgeDetailView
+from ims import views as ims_views
 
 
 urlpatterns = [
-    url(r'', include("lti.urls", namespace="lti")),
-    url(r'^upload/?$', CommonCartridgeUploadView.as_view(), name="common-cartridge-upload"),
-    url(r'^upload/success/(?P<pk>[0-9]+)/?$', CommonCartridgeDetailView.as_view(),
-        name="common-cartridge-upload-success"),
+    url(r'share/', include("share.urls", namespace="share")),
     url(r'^admin/', admin.site.urls),
+    url(r'^(?P<lti>.*)/config.xml$', ims_views.lti_config),
+    url(r'^(?P<lti>.*)/?$', ims_views.lti_launch)
 ]

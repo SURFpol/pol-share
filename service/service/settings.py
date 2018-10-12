@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'service',
     'ims',
     'share',
-    'lti',
 ]
 
 MIDDLEWARE = [
