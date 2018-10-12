@@ -29,7 +29,8 @@ except ImportError:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]  # TODO: make this more specific to prevent host spoofing
+ALLOWED_HOSTS = ["ltidev.surfpol.nl"]
+X_FRAME_OPTIONS = 'ALLOWALL'
 
 
 # Application definition
