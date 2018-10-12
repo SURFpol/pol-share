@@ -10,7 +10,7 @@
     http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
     <blti:title>{{ app.title }}</blti:title>
     <blti:description>{{ app.description }}</blti:description>
-    <blti:launch_url>https://{{ server_host }}:{{ server_port }}/{{ app.slug }}/</blti:launch_url>
+    <blti:launch_url>https://{{ host }}/{{ app.slug }}/</blti:launch_url>
     <blti:extensions platform="canvas.instructure.com">
         <lticm:property name="tool_id">{{ app.id }}</lticm:property>
         <lticm:property name="privacy_level">{{ app.privacy_level }}</lticm:property>

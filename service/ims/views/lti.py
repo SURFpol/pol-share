@@ -24,7 +24,6 @@ def lti_launch(request, slug):
 def lti_config(request, slug):
     app = get_object_or_404(LTIApp, slug=slug)
     return TemplateResponse(request, "ims/lti_basic_config.xml", {
-        "server_host": request.META['SERVER_NAME'],
-        "server_port": request.META['SERVER_PORT'],
+        "host": request.get_host(),
         "app": app
     })
