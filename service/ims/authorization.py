@@ -14,6 +14,12 @@ class LTIRequestValidator(RequestValidator):
     def client_key_length(self):
         return 20, 36  # adjusted to accept UUID
 
+    @property
+    def safe_characters(self):
+        safe_characters = super().safe_characters
+        safe_characters.add("-")
+        return safe_characters
+
     def get_client_secret(self, client_key, request):
         credentials = LTICredentials.objects.get(client_key=client_key)
         return credentials.client_secret
@@ -42,6 +48,15 @@ class LTIRequestValidator(RequestValidator):
         :param request:
         :param request_token:
         :param access_token:
+        :return:
+        """
+        return True
+
+    def check_nonce(self, nonce):
+        """
+        Not checking nonce validity. See validate_timestamp_and_nonce docstring
+
+        :param nonce:
         :return:
         """
         return True
