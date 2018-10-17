@@ -4,6 +4,15 @@ from ims.models import LTICredentials
 
 
 class LTIRequestValidator(RequestValidator):
+    """
+    A RequestValidator to validate the launch of a token.
+    The security of this RequestValidator is low and should not be used for normal OAuth flows.
+    Review the validate_timestamp_and_nonce method for more information on the weaknesses in security of LTI.
+    """
+
+    @property
+    def client_key_length(self):
+        return 20, 36  # adjusted to accept UUID
 
     def get_client_secret(self, client_key, request):
         credentials = LTICredentials.objects.get(client_key=client_key)
@@ -15,3 +24,24 @@ class LTIRequestValidator(RequestValidator):
             return True
         except LTICredentials.DoesNotExist:
             return False
+
+    def validate_timestamp_and_nonce(self, client_key, timestamp, nonce,
+                                     request, request_token=None, access_token=None):
+        """
+        This function always returns True, because this check is unnecessary in our case.
+        Usually a request validation happens in two steps.
+        The consumer asks to login. The client acknowledges by distributing a "nonce" (a one use token).
+        This nonce should be checked if indeed nobody has used the nonce before.
+        However in the LTI protocol a "launch" is initiated by the consumer in one go.
+        Therefor we can not secure these requests with a nonce.
+        To mitigate risks the launch should always happen over SSL.
+
+        :param client_key:
+        :param timestamp:
+        :param nonce:
+        :param request:
+        :param request_token:
+        :param access_token:
+        :return:
+        """
+        return True
