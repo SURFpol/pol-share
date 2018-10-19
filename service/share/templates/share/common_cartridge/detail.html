@@ -14,7 +14,10 @@
     </nav>
 
     <div id="content" class="container-fluid">
-        <p>Thank you for sharing your <b>{{ metadata.title }}</b> Common Cartridge with us.</p>
+        <p>
+            Thank you
+            {% if request.user.is_authenticated %}<b>{{ request.user.get_full_name }}</b>{% endif %}
+            for sharing your <b>{{ metadata.title }}</b> Common Cartridge with us.</p>
     </div>
 </body>
 
