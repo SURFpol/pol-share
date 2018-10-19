@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.RemoteUserBackend',
+    'ims.authorization.LTIRemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
