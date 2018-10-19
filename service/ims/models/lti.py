@@ -4,7 +4,7 @@ from oauthlib.common import generate_token
 from django.db import models
 
 
-class PrivacyLevels(object):
+class LTIPrivacyLevels(object):
     ANONYMOUS = 'anonymous'
     EMAIL_ONLY = 'email_only'
     NAME_ONLY = 'name_only'
@@ -12,7 +12,7 @@ class PrivacyLevels(object):
 
 
 PRIVACY_LEVEL_CHOICES = tuple([
-    (value, value) for attr, value in sorted(PrivacyLevels.__dict__.items()) if not attr.startswith("_")
+    (value, value) for attr, value in sorted(LTIPrivacyLevels.__dict__.items()) if not attr.startswith("_")
 ])
 
 

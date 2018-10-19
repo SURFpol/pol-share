@@ -2,11 +2,12 @@ from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.template.response import TemplateResponse
+from django.contrib.auth import authenticate, login
 
 from lti.contrib.django import DjangoToolProvider
 
 from ims.authorization import LTIRequestValidator
-from ims.models import LTIApp
+from ims.models import LTIApp, LTIPrivacyLevels
 
 
 @csrf_exempt
@@ -15,10 +16,13 @@ def lti_launch(request, slug):
     tool_provider = DjangoToolProvider.from_django_request(request=request)
     validator = LTIRequestValidator()
     ok = tool_provider.is_valid_request(validator)
-    if ok:
-        return redirect(app.view)
-    else:
-        return HttpResponseForbidden()
+    if not ok:
+        return HttpResponseForbidden('The launch request is considered invalid')
+    if app.privacy_level != LTIPrivacyLevels.ANONYMOUS:
+        user = authenticate(request, remote_user=request.POST.get("lis_person_contact_email_primary"))
+        if user is not None:
+            login(request, user)
+    return redirect(app.view)
 
 
 def lti_config(request, slug):
