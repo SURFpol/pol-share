@@ -2,7 +2,7 @@ from oauthlib.oauth1 import RequestValidator
 
 from django.contrib.auth.backends import RemoteUserBackend
 
-from ims.models import LTICredentials
+#from ims.models import LTITenant
 
 
 class LTIRequestValidator(RequestValidator):
@@ -23,14 +23,14 @@ class LTIRequestValidator(RequestValidator):
         return safe_characters
 
     def get_client_secret(self, client_key, request):
-        credentials = LTICredentials.objects.get(client_key=client_key)
+        credentials = LTITenant.objects.get(client_key=client_key)
         return credentials.client_secret
 
     def validate_client_key(self, client_key, request):
         try:
-            LTICredentials.objects.get(client_key=client_key)
+            LTITenant.objects.get(client_key=client_key)
             return True
-        except LTICredentials.DoesNotExist:
+        except LTITenant.DoesNotExist:
             return False
 
     def validate_timestamp_and_nonce(self, client_key, timestamp, nonce,

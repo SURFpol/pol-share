@@ -41,7 +41,7 @@ class LTIApp(models.Model):
         verbose_name_plural = 'LTI apps'
 
 
-class LTICredentials(models.Model):
+class LTITenant(models.Model):
 
     client_key = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     client_secret = models.CharField(max_length=30, default=generate_token, editable=False)
@@ -54,5 +54,5 @@ class LTICredentials(models.Model):
         return str(self.client_key)
 
     class Meta:
-        verbose_name = 'LTI credentials'
-        verbose_name_plural = 'LTI credentials'
+        verbose_name = 'LTI tenant'
+        verbose_name_plural = 'LTI tenant'
