@@ -59,10 +59,11 @@ class IMSArchive(models.Model):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.file.name.endswith("imscc"):
-            self.__class__ = CommonCartridge
-        else:
-            self.__class__ = ContentPackage
+        if not isinstance(self, (CommonCartridge, ContentPackage)):
+            if self.file.name.endswith("imscc"):
+                self.__class__ = CommonCartridge
+            else:
+                self.__class__ = ContentPackage
 
     def __str__(self):
         tail, head = os.path.split(self.file.name)
