@@ -1,1 +1,1 @@
-from .oath_1 import LTIRequestValidator, LTIRemoteUserBackend
+from .oauth_1 import LTIRequestValidator, LTIRemoteUserBackend
