@@ -2,7 +2,7 @@ from oauthlib.oauth1 import RequestValidator
 
 from django.contrib.auth.backends import RemoteUserBackend
 
-#from ims.models import LTITenant
+from ims.models import LTITenant
 
 
 class LTIRequestValidator(RequestValidator):
