@@ -11,3 +11,5 @@ service/service/secrets.py
 # Project
 *.imscc
 
+# Development
+service/ims/lti_v3
