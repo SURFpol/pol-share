@@ -69,7 +69,7 @@ class LTIRemoteUserBackend(RemoteUserBackend):
     def authenticate(self, request, remote_user):
         user = super().authenticate(request, remote_user)
         if not user.first_name or not user.last_name:  # because RemoteUserBackend.configure_user ignores request :(
-            user.first_name = request.POST.get('lis_person_name_given', None)
-            user.last_name = request.POST.get('lis_person_name_family', None)
+            user.first_name = request.POST.get('lis_person_name_given', '')
+            user.last_name = request.POST.get('lis_person_name_family', '')
             user.save()
         return user
