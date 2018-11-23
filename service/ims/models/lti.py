@@ -74,7 +74,7 @@ class LTITenant(models.Model):
             self._start_generic_session(launch_request)
 
     def __str__(self):
-        return str(self.client_key)
+        return '{} ({})'.format(self.organization, self.app)
 
     class Meta:
         verbose_name = 'LTI tenant'

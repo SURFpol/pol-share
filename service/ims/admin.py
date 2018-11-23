@@ -12,7 +12,7 @@ class LTIAppAdmin(admin.ModelAdmin):
 
 
 class LTITenantAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'organization', 'app', 'client_secret', 'created_at', 'modified_at')
+    list_display = ('__str__', 'client_key', 'client_secret', 'created_at', 'modified_at')
 
 
 admin.site.register(IMSArchive, IMSArchiveAdmin)
