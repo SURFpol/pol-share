@@ -12,7 +12,7 @@ class LTIPrivacyLevels(object):
 
 
 PRIVACY_LEVEL_CHOICES = tuple([
-    (value, value) for attr, value in sorted(LTIPrivacyLevels.__dict__.items()) if not attr.startswith("_")
+    (value, value) for attr, value in sorted(LTIPrivacyLevels.__dict__.items()) if not attr.startswith('_')
 ])
 
 
