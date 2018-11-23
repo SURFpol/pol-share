@@ -61,17 +61,17 @@ class LTITenant(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     modified_at = models.DateTimeField(auto_now=True, editable=False)
 
-    def _start_generic_session(self, launch_request):
+    def _start_generic_session(self, launch_request, data):
         launch_request.session['roles'] = ''
 
-    def _start_canvas_session(self, launch_request):
-        launch_request.session['roles'] = launch_request.POST.get('roles', '')
+    def _start_canvas_session(self, launch_request, data):
+        launch_request.session['roles'] = data.get('roles', '')
 
-    def start_session(self, launch_request):
+    def start_session(self, launch_request, data):
         if self.lms == LearningManagementSystems.CANVAS:
-            self._start_canvas_session(launch_request)
+            self._start_canvas_session(launch_request, data)
         else:
-            self._start_generic_session(launch_request)
+            self._start_generic_session(launch_request, data)
 
     def __str__(self):
         return '{} ({})'.format(self.organization, self.app)

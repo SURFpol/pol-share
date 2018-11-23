@@ -36,3 +36,14 @@ def lti_config(request, slug):
         "host": request.get_host(),
         "app": app
     })
+
+
+def lti_debug_launch(request, slug):
+    app = get_object_or_404(LTIApp, slug=slug)
+    client_key = request.GET.get('client_key', None)
+    if client_key:
+        tenant = app.ltitenant_set.get(client_key=client_key)
+    else:
+        tenant = LTITenant.objects.last()
+    tenant.start_session(request, request.GET.dict())
+    return redirect(app.view)
