@@ -50,4 +50,8 @@ def lti_debug_launch(request, slug):
     else:
         tenant = LTITenant.objects.last()
     tenant.start_session(request, request.GET.dict())
+    if app.privacy_level != LTIPrivacyLevels.ANONYMOUS:
+        user = authenticate(request, remote_user=request.GET.get('user', 'debug-user'))
+        if user is not None:
+            login(request, user)
     return redirect(app.view)
