@@ -19,8 +19,12 @@ def lti_launch(request, slug):
     if not ok:
         return HttpResponseForbidden('The launch request is considered invalid')
 
-    tenant = LTITenant.objects.get(client_key=tool_provider.consumer_key)  # launch would not be ok if DoesNotExist
-    tenant.start_session(request)
+    client_key = tool_provider.consumer_key  # request would not be ok if this is not set
+    try:
+        tenant = app.ltitenant_set.get(client_key=client_key)
+    except LTITenant.DoesNotExist:
+        return HttpResponseForbidden('{} does not have access to app {}'.format(client_key, app))
+    tenant.start_session(request, request.POST.dict())
 
     if app.privacy_level != LTIPrivacyLevels.ANONYMOUS:
         user = authenticate(request, remote_user=request.POST.get("lis_person_contact_email_primary"))
