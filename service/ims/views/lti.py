@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login
 from lti.contrib.django import DjangoToolProvider
 
 from ims.authorization import LTIRequestValidator
-from ims.models import LTIApp, LTIPrivacyLevels
+from ims.models import LTIApp, LTIPrivacyLevels, LTITenant
 
 
 @csrf_exempt
@@ -22,6 +22,10 @@ def lti_launch(request, slug):
         user = authenticate(request, remote_user=request.POST.get("lis_person_contact_email_primary"))
         if user is not None:
             login(request, user)
+            tenant = LTITenant.objects.get(  # launch would not be ok if DoesNotExist
+                client_key=tool_provider.consumer_key
+            )
+            tenant.start_session(request)
     return redirect(app.view)
 
 

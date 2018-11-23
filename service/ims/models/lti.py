@@ -41,14 +41,37 @@ class LTIApp(models.Model):
         verbose_name_plural = 'LTI apps'
 
 
+class LearningManagementSystems(object):
+    CANVAS = 'canvas'
+    MOODLE = 'moodle'
+
+
+LMS_CHOICES = tuple([
+    (value, value) for attr, value in sorted(LearningManagementSystems.__dict__.items()) if not attr.startswith('_')
+])
+
+
 class LTITenant(models.Model):
 
     client_key = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     client_secret = models.CharField(max_length=30, default=generate_token, editable=False)
     app = models.ForeignKey(LTIApp)
     organization = models.CharField(max_length=256)
+    lms = models.CharField(max_length=256, choices=LMS_CHOICES)  # learning management system
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     modified_at = models.DateTimeField(auto_now=True, editable=False)
+
+    def _start_generic_session(self, launch_request):
+        launch_request.session['roles'] = ''
+
+    def _start_canvas_session(self, launch_request):
+        launch_request.session['roles'] = launch_request.POST.get('roles', '')
+
+    def start_session(self, launch_request):
+        if self.lms == LearningManagementSystems.CANVAS:
+            self._start_canvas_session(launch_request)
+        else:
+            self._start_generic_session(launch_request)
 
     def __str__(self):
         return str(self.client_key)
