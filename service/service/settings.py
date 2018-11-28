@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'bootstrap4',
     'service',
     'ims',
@@ -115,6 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 AUTHENTICATION_BACKENDS = [
+    'service.authorisation.canvas.CanvasOAuth2',
     'ims.authorization.LTIRemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]

@@ -18,6 +18,7 @@ PRIVACY_LEVEL_CHOICES = tuple([
 
 VIEW_CHOICES = (
     ('share:common-cartridge-upload', 'Common Cartridge upload'),
+    ('share:common-cartridge-fetch', 'Common Cartridge fetch'),
 )
 
 

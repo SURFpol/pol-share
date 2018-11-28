@@ -4,7 +4,7 @@ from django import forms
 from ims.models import CommonCartridge
 
 
-class CommonCartridgeUpload(CommonCartridge):
+class CommonCartridgeShared(CommonCartridge):
 
     def get_absolute_url(self):
         return reverse('share:common-cartridge-upload-success', kwargs={"pk": self.id})
@@ -13,7 +13,7 @@ class CommonCartridgeUpload(CommonCartridge):
         proxy = True
 
 
-class CommonCartridgeForm(forms.ModelForm):
+class CommonCartridgeSharedForm(forms.ModelForm):
 
     # TODO: check necessity of a form.clean
     # def clean(self):
@@ -22,5 +22,5 @@ class CommonCartridgeForm(forms.ModelForm):
     #     super().clean()
 
     class Meta:
-        model = CommonCartridgeUpload
+        model = CommonCartridgeShared
         fields = ['file']

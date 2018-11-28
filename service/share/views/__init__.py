@@ -1,1 +1,1 @@
-from .common_cartridge import CommonCartridgeUploadView, CommonCartridgeDetailView
+from .common_cartridge import CommonCartridgeUploadView, CommonCartridgeDetailView, CommonCartridgeFetchViewset
