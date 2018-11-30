@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.template.response import TemplateResponse
 from django.shortcuts import redirect
 
+from datagrowth.configuration import create_config
 from datagrowth.resources.http.tasks import send
 from share.models import CommonCartridgeShared, CommonCartridgeSharedForm, CanvasIMSCCExport, CanvasIMSCCExportDownload
 
@@ -45,15 +46,13 @@ class CommonCartridgeFetchViewset(object):
             )
 
         # Create the IMSCC export through the API
-        config = {
+        config = create_config('http_resource', {
             "resource": "share.CanvasIMSCCExport",
             "purge_immediately": True,
             "continuation_limit": 30,
             "interval_duration": 1000,
             "_access_token": access_token,
-            "_namespace": "http_resource",
-            "_private": ["_private", "_namespace", "_defaults"]
-        }
+        })
         scc, err = send(api_domain, course_id, export_type='common_cartridge', config=config, method='post')
         success = next((_id for _id in scc if _id), None)
         if success is None:
