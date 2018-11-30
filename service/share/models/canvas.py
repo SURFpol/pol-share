@@ -2,7 +2,7 @@ import os
 from copy import deepcopy
 from urlobject import URLObject
 
-from datagrowth.resources import HttpResource
+from datagrowth.resources import HttpResource, HttpFileResource
 
 
 class CanvasResource(HttpResource):
@@ -54,3 +54,7 @@ class CanvasIMSCCExport(CanvasResource):
         export_id, workflow_state = self.get_progress()
         if not self.success or workflow_state == 'exported':
             super().close()
+
+
+class CanvasIMSCCExportDownload(HttpFileResource):
+    pass

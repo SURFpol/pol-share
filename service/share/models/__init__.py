@@ -1,2 +1,2 @@
 from .content import CommonCartridgeShared, CommonCartridgeSharedForm
-from .canvas import CanvasIMSCCExport
+from .canvas import CanvasIMSCCExport, CanvasIMSCCExportDownload

@@ -1,3 +1,16 @@
 from django.contrib import admin
 
-# Register your models here.
+from datagrowth.admin import HttpResourceAdmin
+from share.models import CanvasIMSCCExport, CanvasIMSCCExportDownload
+
+
+class CanvasIMSCCExportAdmin(HttpResourceAdmin):
+    pass
+
+
+class CanvasIMSCCExportDownloadAdmin(HttpResourceAdmin):
+    pass
+
+
+admin.site.register(CanvasIMSCCExport, CanvasIMSCCExportAdmin)
+admin.site.register(CanvasIMSCCExportDownload, CanvasIMSCCExportDownloadAdmin)
