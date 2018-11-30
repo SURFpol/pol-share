@@ -30,6 +30,14 @@ class CanvasIMSCCExport(CanvasResource):
         content_type, data = self.content
         return data.get('id', None), data.get('workflow_state', None)
 
+    def get_download_url(self):
+        export_id, workflow_state = self.get_progress()
+        if not workflow_state == 'exported':
+            return None
+        content_type, data = self.content
+        attachment = data.get('attachment', {})
+        return attachment.get('url', None)
+
     @staticmethod
     def get_continuation_url(request, export_id):
         url = URLObject(request.get("url"))
