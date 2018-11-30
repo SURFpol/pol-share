@@ -13,12 +13,12 @@ from bs4 import BeautifulSoup
 
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.conf import settings
 
 import json_field
 
+from datagrowth import settings as datagrowth_settings
 from datagrowth.resources.base import Resource
-from datagrowth.exceptions import DGHttpError50X as DSHttpError50X, DGHttpError40X as DSHttpError40X
+from datagrowth.exceptions import DGHttpError50X, DGHttpError40X
 
 
 class HttpResource(Resource):
@@ -283,10 +283,10 @@ class HttpResource(Resource):
     # Methods to enable auth for the resource.
     # Override auth_parameters to provide authentication.
 
-    def auth_parameters(self):
+    def auth_headers(self):
         return {}
 
-    def auth_headers(self):
+    def auth_parameters(self):
         return {}
 
     def request_with_auth(self):
@@ -360,10 +360,13 @@ class HttpResource(Resource):
         try:
             response = self.session.send(
                 preq,
-                proxies=settings.REQUESTS_PROXIES,
-                verify=settings.REQUESTS_VERIFY,
+                proxies=datagrowth_settings.DATAGROWTH_REQUESTS_PROXIES,
+                verify=datagrowth_settings.DATAGROWTH_REQUESTS_VERIFY,
                 timeout=self.timeout
             )
+        except requests.exceptions.SSLError:
+            self.set_error(496, connection_error=True)
+            return
         except (requests.ConnectionError, IOError):
             self.set_error(502, connection_error=True)
             return
@@ -387,10 +390,10 @@ class HttpResource(Resource):
         class_name = self.__class__.__name__
         if self.status >= 500:
             message = "{} > {} \n\n {}".format(class_name, self.status, self.body)
-            raise DSHttpError50X(message, resource=self)
+            raise DGHttpError50X(message, resource=self)
         elif self.status >= 400:
             message = "{} > {} \n\n {}".format(class_name, self.status, self.body)
-            raise DSHttpError40X(message, resource=self)
+            raise DGHttpError40X(message, resource=self)
         else:
             return True
 
