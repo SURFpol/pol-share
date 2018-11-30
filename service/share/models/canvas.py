@@ -1,13 +1,20 @@
-from django.conf import settings
+import os
+from copy import deepcopy
+from urlobject import URLObject
 
 from datagrowth.resources import HttpResource
 
 
 class CanvasResource(HttpResource):
 
-    def auth_parameters(self):  # TODO: get access_token from social_auth and add as Bearer header
+    def auth_headers(self):
+        # TODO: current setup stores access_tokens in db, which is wrong.
+        # We should consider encrypting the relevant values with Python Social Auth
+        # And configurations should be able to delegate values to other objects (like social_auth models)
+        if not self.config.access_token:
+            return {}
         return {
-            'access_token': settings.CANVAS_ACCESS_KEY
+            "Authorization": "Bearer {}".format(self.config.access_token)
         }
 
     class Meta:
@@ -15,10 +22,35 @@ class CanvasResource(HttpResource):
 
 
 class CanvasIMSCCExport(CanvasResource):
-    URI_TEMPLATE = 'https://{}/api/v1/users/{}/content_exports'
+    URI_TEMPLATE = 'https://{}/api/v1/courses/{}/content_exports'
 
-    def get_progress_url(self):
+    def get_progress(self):
         if not self.success:
-            return
+            return None, None
         content_type, data = self.content
-        return data.get('progress_url', None)
+        return data.get('id', None), data.get('workflow_state', None)
+
+    @staticmethod
+    def get_continuation_url(request, export_id):
+        url = URLObject(request.get("url"))
+        tail, head = os.path.split(url.path)
+        if head == 'content_exports':
+            head += '/{}'.format(export_id)
+        url = url.with_path(os.path.join(tail, head))
+        return str(url)
+
+    def create_next_request(self):
+
+        export_id, workflow_state = self.get_progress()
+        if not self.success or workflow_state == 'exported':
+            return None
+
+        request = deepcopy(self.request)
+        request["method"] = "get"
+        request["url"] = self.get_continuation_url(request, export_id)
+        return request
+
+    def close(self):
+        export_id, workflow_state = self.get_progress()
+        if not self.success or workflow_state == 'exported':
+            super().close()
