@@ -286,6 +286,9 @@ class HttpResource(Resource):
     def auth_parameters(self):
         return {}
 
+    def auth_headers(self):
+        return {}
+
     def request_with_auth(self):
         url = URLObject(self.request.get("url"))
         params = url.query.dict
@@ -293,6 +296,7 @@ class HttpResource(Resource):
         url = url.set_query_params(params)
         request = deepcopy(self.request)
         request["url"] = str(url)
+        request["headers"].update(self.auth_headers())
         return request
 
     def request_without_auth(self):
@@ -300,6 +304,9 @@ class HttpResource(Resource):
         url = url.del_query_params(self.auth_parameters())
         request = deepcopy(self.request)
         request["url"] = str(url)
+        for key in self.auth_headers().keys():
+            if key in request["headers"]:
+                del request["headers"][key]
         return request
 
     #######################################################
