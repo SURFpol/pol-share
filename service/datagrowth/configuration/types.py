@@ -10,6 +10,8 @@ Configurations may get overridden at runtime, which typically happens during req
 import warnings
 from copy import copy
 
+from .configs import DEFAULT_CONFIGURATION
+
 
 class ConfigurationNotFoundError(AttributeError):
     pass
@@ -299,3 +301,13 @@ class ConfigurationProperty(object):
             )
         else:
             obj.__dict__[self._storage_attribute].update(new)
+
+
+def create_config(namespace, values):
+    config = ConfigurationType(
+        defaults=DEFAULT_CONFIGURATION,
+        namespace=namespace,
+        private=("_private", "_namespace", "_defaults",)
+    )
+    config.update(values)
+    return config
