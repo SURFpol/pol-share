@@ -103,7 +103,7 @@ class ContentPackage(IMSArchive):
     def get_metadata(self):
         manifest = BeautifulSoup(self.manifest, "lxml")
         schema = manifest.find('schema').text
-        title = manifest.find('lomcc:title').find('lomcc:string').text if schema == "IMS Common Cartridge" else \
+        title = manifest.find('lomimscc:title').find('lomimscc:string').text if schema == "IMS Common Cartridge" else \
             manifest.find('imsmd:title').find('imsmd:langstring').text
         return {
             'schema': {
