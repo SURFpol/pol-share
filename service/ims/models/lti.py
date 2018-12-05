@@ -77,7 +77,7 @@ class LTITenant(models.Model):
         launch_request.session['course_id'] = data.get('custom_canvas_course_id', None)
 
     def start_session(self, launch_request, data):
-        launch_request.session["tenant_key"] = self.client_key
+        launch_request.session["tenant_key"] = str(self.client_key)
         if self.lms == LearningManagementSystems.CANVAS:
             self._start_canvas_session(launch_request, data)
         else:
