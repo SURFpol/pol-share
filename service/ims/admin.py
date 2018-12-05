@@ -13,6 +13,7 @@ class LTIAppAdmin(admin.ModelAdmin):
 
 class LTITenantAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'client_key', 'client_secret', 'get_lti_config_url', 'created_at', 'modified_at')
+    prepopulated_fields = {'slug': ('organization',)}
 
 
 admin.site.register(IMSArchive, IMSArchiveAdmin)

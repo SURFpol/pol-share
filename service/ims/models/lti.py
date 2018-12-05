@@ -5,6 +5,9 @@ from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 
+from datagrowth.configuration import ConfigurationField
+from ims.constants import CanvasVisibility
+
 
 class LTIPrivacyLevels(object):
     ANONYMOUS = 'anonymous'
@@ -56,13 +59,19 @@ LMS_CHOICES = tuple([
 
 class LTITenant(models.Model):
 
+    app = models.ForeignKey(LTIApp)
+    organization = models.CharField(max_length=256)
+    slug = models.SlugField()
+    lms = models.CharField(max_length=256, choices=LMS_CHOICES)  # learning management system
+    config = ConfigurationField(default={}, blank=True, namespace='ims', config_defaults={
+        'ims_canvas_course_navigation_visibility': CanvasVisibility.ADMINS
+    })
+
     client_key = models.UUIDField('consumer key', primary_key=True, default=uuid.uuid4, editable=False, )
     client_secret = models.CharField('shared secret', max_length=30, default=generate_token, editable=False)
     api_key = models.CharField(max_length=255, null=True, blank=True)
     api_secret = models.CharField(max_length=255, null=True, blank=True)
-    app = models.ForeignKey(LTIApp)
-    organization = models.CharField(max_length=256)
-    lms = models.CharField(max_length=256, choices=LMS_CHOICES)  # learning management system
+
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     modified_at = models.DateTimeField(auto_now=True, editable=False)
 
@@ -84,7 +93,7 @@ class LTITenant(models.Model):
             self._start_generic_session(launch_request, data)
 
     def get_lti_config_url(self):
-        return "{}{}".format(settings.DEFAULT_DOMAIN, reverse('lti-config', args=(self.app.slug,)))
+        return "{}{}".format(settings.DEFAULT_DOMAIN, reverse('lti-config', args=(self.app.slug, self.slug,)))
     get_lti_config_url.short_description = 'Config URL'
 
     def __str__(self):

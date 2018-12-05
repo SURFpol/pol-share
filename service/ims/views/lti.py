@@ -8,6 +8,7 @@ from lti.contrib.django import DjangoToolProvider
 
 from ims.authorization import LTIRequestValidator
 from ims.models import LTIApp, LTIPrivacyLevels, LTITenant
+from ims.models.lti import LearningManagementSystems
 
 
 @csrf_exempt
@@ -34,11 +35,18 @@ def lti_launch(request, slug):
     return redirect(app.view)
 
 
-def lti_config(request, slug):
-    app = get_object_or_404(LTIApp, slug=slug)
+def lti_config(request, app_slug, tenant_slug):
+    if tenant_slug != 'config':
+        tenant = get_object_or_404(LTITenant, app__slug=app_slug, slug=tenant_slug)
+        app = tenant.app
+    else:
+        tenant = None
+        app = get_object_or_404(LTIApp, slug=app_slug)
     return TemplateResponse(request, "ims/lti_basic_config.xml", {
         "host": request.get_host(),
-        "app": app
+        "app": app,
+        "tenant": tenant,
+        "lms": LearningManagementSystems
     })
 
 
