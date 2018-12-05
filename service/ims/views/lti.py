@@ -42,7 +42,7 @@ def lti_config(request, app_slug, tenant_slug):
     else:
         tenant = None
         app = get_object_or_404(LTIApp, slug=app_slug)
-    return TemplateResponse(request, "ims/lti_basic_config.xml", {
+    return TemplateResponse(request, "ims/lti_config.xml", {
         "host": request.get_host(),
         "app": app,
         "tenant": tenant,
