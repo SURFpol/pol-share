@@ -7,7 +7,7 @@ from ims.models import CommonCartridge
 class CommonCartridgeShared(CommonCartridge):
 
     def get_absolute_url(self):
-        return reverse('share:common-cartridge-upload-success', kwargs={"pk": self.id})
+        return reverse('share:common-cartridge-detail', kwargs={"pk": self.id})
 
     class Meta:
         proxy = True
