@@ -3,6 +3,7 @@ from django.http import HttpResponseForbidden
 from django.views.decorators.csrf import csrf_exempt
 from django.template.response import TemplateResponse
 from django.contrib.auth import authenticate, login
+from django.core.urlresolvers import reverse, resolve
 
 from lti.contrib.django import DjangoToolProvider
 
@@ -32,7 +33,11 @@ def lti_launch(request, slug):
         if user is not None:
             login(request, user)
 
-    return redirect(app.view)
+    # Lookup the view and return its response
+    # Redirect impossible because we need to set cookies for sessions
+    url = reverse(app.view)
+    view = resolve(url)
+    return view.func(request)
 
 
 def lti_config(request, app_slug, tenant_slug):
@@ -62,4 +67,9 @@ def lti_debug_launch(request, slug):
         user = authenticate(request, remote_user=request.GET.get('user', 'debug-user'))
         if user is not None:
             login(request, user)
-    return redirect(app.view)
+
+    # Lookup the view and return its response
+    # Redirect impossible because we need to set cookies for sessions
+    url = reverse(app.view)
+    view = resolve(url)
+    return view.func(request)
