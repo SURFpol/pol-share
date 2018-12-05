@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'', include('social_django.urls', namespace='social')),
     url(
-        r'^(?P<app_slug>[A-Za-z0-9\-]+)/(config/)?(?P<tenant_slug>[A-Za-z0-9\-]+)\.xml$',
+        r'^(?P<app_slug>[A-Za-z0-9\-]+)/config/(?P<tenant_slug>[A-Za-z0-9\-]+)\.xml$',
         ims_views.lti_config,
         name='lti-config'
     ),

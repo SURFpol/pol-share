@@ -41,7 +41,7 @@ def lti_launch(request, slug):
 
 
 def lti_config(request, app_slug, tenant_slug):
-    if tenant_slug != 'config':
+    if tenant_slug != app_slug:
         tenant = get_object_or_404(LTITenant, app__slug=app_slug, slug=tenant_slug)
         app = tenant.app
     else:
