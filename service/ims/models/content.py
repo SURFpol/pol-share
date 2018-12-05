@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from django.conf import settings
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.utils.html import format_html
 
 
 class IMSArchive(models.Model):
@@ -53,9 +54,8 @@ class IMSArchive(models.Model):
             raise ValidationError('The IMS archive should contain a imsmanifest.xml file')
 
     def metadata_tag(self):
-        return '<pre>{}</pre>'.format(json.dumps(self.get_metadata(), indent=4))
+        return format_html('<pre>{}</pre>', json.dumps(self.get_metadata(), indent=4))
     metadata_tag.short_description = 'Metadata'
-    metadata_tag.allow_tags = True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
