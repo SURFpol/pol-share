@@ -54,8 +54,10 @@ LMS_CHOICES = tuple([
 
 class LTITenant(models.Model):
 
-    client_key = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    client_secret = models.CharField(max_length=30, default=generate_token, editable=False)
+    client_key = models.UUIDField('consumer key', primary_key=True, default=uuid.uuid4, editable=False, )
+    client_secret = models.CharField('shared secret', max_length=30, default=generate_token, editable=False)
+    api_key = models.CharField(max_length=255, null=True, blank=True)
+    api_secret = models.CharField(max_length=255, null=True, blank=True)
     app = models.ForeignKey(LTIApp)
     organization = models.CharField(max_length=256)
     lms = models.CharField(max_length=256, choices=LMS_CHOICES)  # learning management system

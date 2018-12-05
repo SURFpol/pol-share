@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('ims', '0002_ltiapp_ltitenant'),
+        ('ims', '0001_initial'),
         ('contenttypes', '0002_remove_content_type_name'),
     ]
 
