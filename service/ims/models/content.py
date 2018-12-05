@@ -29,9 +29,12 @@ class IMSArchive(models.Model):
         results = {}
         resources = manifest.find_all('resource', identifier=True)
         for resource in resources:
+            item = manifest.find(attrs={'identifierref': resource['identifier']})
+            title = item.find('title', None) if item else None
             results[resource['identifier']] = {
+                'title': title.text if title else None,
                 'content_type': resource['type'],
-                'main': resource['href'],
+                'main': resource.get('href', None),
                 'files': [file['href'] for file in resource.find_all('file')]
             }
         return results
