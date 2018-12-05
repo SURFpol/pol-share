@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Success</title>
+    <title>Common Cartridge</title>
     {% bootstrap_css %}
     <link href="{% static "css/main.css" %}" rel="stylesheet">
     {% bootstrap_javascript jquery='full' %}
@@ -17,7 +17,33 @@
         <p>
             Thank you
             {% if request.user.is_authenticated %}<b>{{ request.user.get_full_name }}</b>{% endif %}
-            for sharing your <b>{{ metadata.title }}</b> Common Cartridge with us.</p>
+            for sharing your <b>{{ metadata.title }}</b> Common Cartridge with us.
+            The content was shared under the <b>{{ metadata.license }}</b> license.
+            You can see the content that we downloaded in the table beneath.
+        </p>
+
+        <h2 style="margin: 40px;">{{ metadata.title }}</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Reference</th>
+                </tr>
+            </thead>
+            {% for identifier, resource in object.get_resources.items %}
+                {% if resource.title %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ resource.title }}</td>
+                        <td>{{ resource.content_type }}</td>
+                        <td>{{ resource.main }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+
     </div>
 </body>
 
