@@ -9,7 +9,7 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 
 RUN conda env create -f environment.yml
-RUN echo "source activate env" > ~/.bashrc
+RUN echo "source activate surf-share" > ~/.bashrc
 ENV PATH /opt/conda/envs/surf-share/bin:$PATH
 
 # Collect all statics resources (images, css, etc.)
