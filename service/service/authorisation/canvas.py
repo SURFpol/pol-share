@@ -11,7 +11,10 @@ class CanvasOAuth2(BaseOAuth2):
     ACCESS_TOKEN_METHOD = 'POST'
 
     def get_key_and_secret(self):
-        tenant = LTITenant.objects.get(client_key=self.strategy.request.session["tenant_key"])
+        tenant_key = self.strategy.request.session.get('tenant_key')
+        if not tenant_key:
+            return None, None
+        tenant = LTITenant.objects.get(client_key=tenant_key)
         return tenant.api_key, tenant.api_secret
 
     def get_user_details(self, response):
