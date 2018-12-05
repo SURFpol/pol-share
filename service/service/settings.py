@@ -30,10 +30,11 @@ except ImportError:
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "localhost",
     "ltidev.surfpol.nl",
+    "localhost",
 ]
 X_FRAME_OPTIONS = 'ALLOWALL'
+DEFAULT_DOMAIN = 'https://{}'.format(ALLOWED_HOSTS[0])
 
 
 # Application definition

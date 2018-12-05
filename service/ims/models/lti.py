@@ -1,7 +1,9 @@
 import uuid
 from oauthlib.common import generate_token
 
+from django.conf import settings
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class LTIPrivacyLevels(object):
@@ -65,23 +67,24 @@ class LTITenant(models.Model):
     modified_at = models.DateTimeField(auto_now=True, editable=False)
 
     def _start_generic_session(self, launch_request, data):
-        launch_request.session['user_id'] = data.get('user_id', None)
         launch_request.session['roles'] = ''
         launch_request.session['api_domain'] = None
         launch_request.session['course_id'] = None
 
     def _start_canvas_session(self, launch_request, data):
-        #launch_request.session['user_id'] = data.get('custom_canvas_user_id', None)
         launch_request.session['roles'] = data.get('roles', '')
         launch_request.session['api_domain'] = data.get('custom_canvas_api_domain', None)
         launch_request.session['course_id'] = data.get('custom_canvas_course_id', None)
-
 
     def start_session(self, launch_request, data):
         if self.lms == LearningManagementSystems.CANVAS:
             self._start_canvas_session(launch_request, data)
         else:
             self._start_generic_session(launch_request, data)
+
+    def get_lti_config_url(self):
+        return "{}{}".format(settings.DEFAULT_DOMAIN, reverse('lti-config', args=(self.app.slug,)))
+    get_lti_config_url.short_description = 'Config URL'
 
     def __str__(self):
         return '{} ({})'.format(self.organization, self.app)
