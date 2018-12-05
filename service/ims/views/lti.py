@@ -24,7 +24,7 @@ def lti_launch(request, slug):
         tenant = app.ltitenant_set.get(client_key=client_key)
     except LTITenant.DoesNotExist:
         return HttpResponseForbidden('{} does not have access to app {}'.format(client_key, app))
-    tenant.start_session(request, request.POST.dict())
+    tenant.start_session(request, request.POST.dict())  # warning: this authorizes a user
 
     if app.privacy_level != LTIPrivacyLevels.ANONYMOUS:
         user = authenticate(request, remote_user=request.POST.get("lis_person_contact_email_primary"))

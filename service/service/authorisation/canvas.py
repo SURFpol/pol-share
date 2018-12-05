@@ -1,5 +1,7 @@
 from social_core.backends.oauth import BaseOAuth2
 
+from ims.models import LTITenant
+
 
 class CanvasOAuth2(BaseOAuth2):
 
@@ -9,9 +11,8 @@ class CanvasOAuth2(BaseOAuth2):
     ACCESS_TOKEN_METHOD = 'POST'
 
     def get_key_and_secret(self):
-        # TODO: these keys should come from the Tenant, but how to get to the Tenant?
-        print(self.strategy)
-        return '10000000000001', 'otqEQ706YXXZyHn2sNMQHuz9gHssC06UMWRdmZ7i45PCHOZt5evmrZeotl8OWAFW'
+        tenant = LTITenant.objects.get(client_key=self.strategy.request.session["tenant_id"])
+        return tenant.api_key, tenant.api_secret
 
     def get_user_details(self, response):
         username = response.get('user', {}).get('name', None)
