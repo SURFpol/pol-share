@@ -8,6 +8,7 @@ from django.conf import settings
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.html import format_html
+from django.core.files.storage import default_storage
 
 
 class IMSArchive(models.Model):
@@ -19,7 +20,7 @@ class IMSArchive(models.Model):
     @classmethod
     def from_file_path(cls, file_path):
         archive = cls()
-        archive.file.name = file_path
+        archive.file.name = file_path.replace(default_storage.location, '')
         archive.clean()
         return archive
 
