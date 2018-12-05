@@ -20,7 +20,7 @@ class IMSArchive(models.Model):
     @classmethod
     def from_file_path(cls, file_path):
         archive = cls()
-        archive.file.name = file_path.replace(default_storage.location, '')
+        archive.file.name = file_path.replace(default_storage.location, '').lstrip('/')
         archive.clean()
         return archive
 
