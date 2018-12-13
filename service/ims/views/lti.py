@@ -26,12 +26,16 @@ def lti_launch(request, slug):
         tenant = app.ltitenant_set.get(client_key=client_key)
     except LTITenant.DoesNotExist:
         return HttpResponseForbidden('{} does not have access to app {}'.format(client_key, app))
-    tenant.start_session(request, request.POST.dict())  # warning: this authorizes a user
 
+    # First thing is to create and login a user, because this influences the session
     if app.privacy_level != LTIPrivacyLevels.ANONYMOUS:
         user = authenticate(request, remote_user=request.POST.get("lis_person_contact_email_primary"))
         if user is not None:
             login(request, user)
+
+    # After we have a user we're gonna set its session based on tenant settings
+    # This authorizes a user to use tenant LMS API's
+    tenant.start_session(request, request.POST.dict())
 
     # Lookup the view and return its response
     # Redirect impossible because we need to set cookies for sessions
