@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'service',
     'ims',
+    'canvas',
     'share',
 ]
 

@@ -6,7 +6,8 @@ from django.shortcuts import redirect
 
 from datagrowth.configuration import create_config
 from datagrowth.resources.http.tasks import send
-from share.models import CommonCartridgeShared, CommonCartridgeSharedForm, CanvasIMSCCExport, CanvasIMSCCExportDownload
+from canvas.models import CanvasIMSCCExport, CanvasIMSCCExportDownload
+from share.models import CommonCartridgeShared, CommonCartridgeSharedForm
 
 
 class CommonCartridgeUploadView(CreateView):

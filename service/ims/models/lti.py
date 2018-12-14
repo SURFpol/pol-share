@@ -6,7 +6,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 
 from datagrowth.configuration import ConfigurationField
-from ims.constants import CanvasVisibility
+from canvas.constants import CanvasVisibility  # TODO: get rid of this dependency
 
 
 class LTIPrivacyLevels(object):
