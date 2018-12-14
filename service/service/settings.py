@@ -118,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 AUTHENTICATION_BACKENDS = [
-    'service.authorisation.canvas.CanvasOAuth2',
+    'canvas.authorization.CanvasOAuth2',
     'ims.authorization.LTIRemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
