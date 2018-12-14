@@ -48,7 +48,7 @@ class CommonCartridgeFetchViewset(object):
 
         # Create the IMSCC export through the API
         config = create_config('http_resource', {
-            "resource": "share.CanvasIMSCCExport",
+            "resource": "canvas.CanvasIMSCCExport",
             "purge_immediately": True,
             "continuation_limit": 30,
             "interval_duration": 1000,
