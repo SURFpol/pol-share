@@ -1,0 +1,3 @@
+[submodule "service/ims"]
+	path = service/ims
+	url = git@github.com:SURFpol/django_ims_toolbox.git
