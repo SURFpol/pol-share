@@ -42,6 +42,10 @@ Under the *IMS* section of the admin you first need to add a LTIApp with the fol
 * description => An LTI app to share Common Cartridges (but can be anything)
 * privacy_level => public
 
+One alternative for the view field is "share:common-cartridge-fetch".
+This will show an upload form for an IMSCC file when starting the app instead of
+a link to download the IMSCC from Canvas directly.
+
 Then you need to add at least one tenant. One example tenant:
 * app => (select the app you made above)
 * organization => SURFnet
