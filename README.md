@@ -47,14 +47,19 @@ Then you need to add at least one tenant. One example tenant:
 * organization => SURFnet
 * slug => surfnet (gets autocompleted)
 * lms => canvas
-* api_key => a canvas API key
-* api_secret => the API secret belonging to the API key
+* api_key => a canvas API key (optional)
+* api_secret => the API secret belonging to the API key (optional)
 
+Follow this guide to [create an API key and secret](https://community.canvaslms.com/docs/DOC-12657-4214441833)
 When saving use the "save" button and note down the 
 ```consumer_key```, ```shared_secret``` and ```config_url``` from the overview.
 
 Now in your Canvas instance you can add the LTI and use the "by URL" option.
-You can fill out the ```consumer_key```, ```shared_secret```, ```config_url``` values here.
+You can fill out the ```consumer_key```, ```shared_secret``` and ```config_url``` values here.
 After you fill out the form the LTI app and LMS should configure themselves and the LTI app should become available.
 
-After you've used the LTI app to share a course the course content will be available as a IMSArchive instance.
+Once the LTI is configured with the LMS you should be able to go to a course and click a button in the left menu
+that is equal to the title of your LTI app.
+This button will "launch" the LTI and you should be able to share the course with a few clicks.
+After you've used the LTI app to share a course.
+The course content will be available as an IMSArchive instance in the admin.
