@@ -2,7 +2,9 @@ import os
 from copy import deepcopy
 from urlobject import URLObject
 
-from datagrowth.resources import HttpResource, HttpFileResource
+from django.db.models import signals
+
+from datagrowth.resources import HttpResource, HttpFileResource, file_resource_delete_handler
 
 
 class CanvasResource(HttpResource):
@@ -66,3 +68,6 @@ class CanvasIMSCCExport(CanvasResource):
 
 class CanvasIMSCCExportDownload(HttpFileResource):
     pass
+
+
+signals.post_delete.connect(file_resource_delete_handler, sender=CanvasIMSCCExportDownload)

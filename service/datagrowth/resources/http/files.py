@@ -106,7 +106,7 @@ class HttpFileResource(HttpResource):  # TODO: write tests
         file_name = self._save_file(self.request["url"], response.content)
         self.head = dict(response.headers)
         self.status = response.status_code
-        self.body = file_name.replace(datagrowth_settings.DATAGROWTH_MEDIA_ROOT, "").strip("/")
+        self.body = file_name.replace(datagrowth_settings.DATAGROWTH_MEDIA_ROOT, "").lstrip("/")
 
     def transform(self, file):
         return file
@@ -144,3 +144,7 @@ class HttpImageResource(HttpFileResource):
 
     class Meta:
         abstract = True
+
+
+def file_resource_delete_handler(sender, instance, **kwargs):
+    default_storage.delete(instance.body)
