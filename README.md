@@ -54,7 +54,9 @@ Then you need to add at least one tenant. One example tenant:
 * api_key => a canvas API key (optional)
 * api_secret => the API secret belonging to the API key (optional)
 
-Follow this guide to [create an API key and secret](https://community.canvaslms.com/docs/DOC-12657-4214441833)
+Follow this guide to [create an API key and secret for Canvas](https://community.canvaslms.com/docs/DOC-12657-4214441833).
+Once created you can add these in the ```api_key``` and ```api_secret``` fields.
+
 When saving use the "save" button and note down the 
 ```consumer_key```, ```shared_secret``` and ```config_url``` from the overview.
 
