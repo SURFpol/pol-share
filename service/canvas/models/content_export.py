@@ -10,9 +10,8 @@ from datagrowth.resources import HttpResource, HttpFileResource, file_resource_d
 class CanvasResource(HttpResource):
 
     def auth_headers(self):
-        # TODO: current setup stores access_tokens in db, which is wrong.
-        # We should consider encrypting the relevant values with Python Social Auth
-        # And configurations should be able to delegate values to other objects (like social_auth models)
+        # TODO: current setup stores access_tokens in a unencrypted db, which is wrong.
+        # Configurations should be able to delegate values to other objects (like social_auth models)
         if not self.config.access_token:
             return {}
         return {
